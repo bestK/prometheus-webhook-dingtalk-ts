@@ -19,8 +19,8 @@ app.use(function (err: Error, req: Request, res: Response, next: NextFunction) {
   return res.sendStatus(500);
 });
 
-app.listen(8080, function () {
-  console.log(`the server is start at port 8080`);
+app.listen(8060, function () {
+  console.log(`the server is start at port 8060`);
 });
 
 app.post("/send", function (req, res) {

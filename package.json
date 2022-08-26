@@ -5,18 +5,19 @@
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "dev": "cross-env nodemon --watch 'src/' -e ts --exec 'ts-node' ./src/app.ts"
+        "dev": "cross-env nodemon --watch 'src/' -e ts --exec 'ts-node' ./src/app.ts",
+        "build": "cross-env nodemon --watch 'src/' -e ts --exec 'ts-node'  --transpile-only ./src/app.ts"
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/liyuezu/simple-login-node.git"
+        "url": "git+https://github.com/bestK/prometheus-webhook-dingtalk-ts"
     },
     "author": "bestk",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/liyuezu/simple-login-node/issues"
+        "url": "https://github.com/bestK/prometheus-webhook-dingtalk-ts/issues"
     },
-    "homepage": "https://github.com/liyuezu/simple-login-node#readme",
+    "homepage": "https://github.com/bestK/prometheus-webhook-dingtalk-ts#readme",
     "dependencies": {
         "axios": "^0.27.2",
         "body-parser": "^1.20.0",
