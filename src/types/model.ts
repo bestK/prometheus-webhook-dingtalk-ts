@@ -1,3 +1,8 @@
+export interface IENV {
+    port: number;
+    dingtalkUrl: string
+}
+
 export interface IMarkdown {
     title: string;
     text: string;

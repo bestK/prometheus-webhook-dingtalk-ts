@@ -7,6 +7,8 @@ import { NextFunction, Request, Response } from 'express'; // express 申明文�
 
 import { INotification, IMetric, ILable, IDingtalkMessage } from "./types/model";
 
+import { ENV } from "./config"
+
 const app = express();
 const axios = require('axios').default;
 
@@ -19,20 +21,15 @@ app.use(function (err: Error, req: Request, res: Response, next: NextFunction) {
   return res.sendStatus(500);
 });
 
-app.listen(8060, function () {
-  console.log(`the server is start at port 8060`);
+app.listen(ENV.port, function () {
+  console.log(`the server is start at port ${ENV.port}`);
 });
 
 app.post("/send", function (req, res) {
-  let notification = req.body as INotification
-
-
+  let notification: INotification = req.body
   let metrics: Array<IMetric> = parseValueString(notification.alerts[0].valueString)
-
   let { title } = notification
-
   let { startsAt, endsAt, silenceURL } = notification.alerts[0]
-
   let { instance, job } = metrics[0].labels
   let warnValue: string = notification.commonAnnotations.description
 
@@ -42,9 +39,7 @@ app.post("/send", function (req, res) {
       .join(",")
   }
 
-
-
-  let message: IDingtalkMessage = {
+  const message: IDingtalkMessage = {
     msgtype: "markdown", markdown: {
       title: title, text:
         `<font color=#FF0000 size=6 face="黑体">状态: ${notification.status} </font>        
@@ -57,10 +52,10 @@ app.post("/send", function (req, res) {
     }
   }
 
-
   dingtalkMessage(message).then(data => {
     res.send(data)
-  }).catch(err=>{
+  }).catch(err => {
+    console.error(`发送失败：${err}`)
     res.send(`{code:1,message:"发送失败"}`)
   })
 
@@ -68,8 +63,7 @@ app.post("/send", function (req, res) {
 
 
 function dingtalkMessage(message: IDingtalkMessage) {
-  const dingtalkUrl = "https://oapi.dingtalk.com/robot/send?access_token=78618b975245a51cc0972a3d6fe19a916fab605c330094b9b4aae95830142115"
-  return axios.post(dingtalkUrl, message)
+  return axios.post(ENV.dingtalkUrl, message)
     .then(function (response) {
       console.log(`response----------------------${JSON.stringify(response.data)}`)
       return response.data
