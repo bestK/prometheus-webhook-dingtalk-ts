@@ -42,12 +42,11 @@ app.post("/send", function (req, res) {
   const message: IDingtalkMessage = {
     msgtype: "markdown", markdown: {
       title: title, text:
-        `<font color=#FF0000 size=6 face="黑体">状态: ${notification.status} </font>        
+        `**<font color=red size=7>状态: ${notification.status} </font>**        
         **发生时间**:  ${startsAt}   
         **机器**: ${instance} - ${job}      
         **问题**: ${title}      
-        **报警值**: ${warnValue}  \n  
-        [报警链接 内网ONLY](${silenceURL})
+        **报警值**: ${warnValue}\n\n[立即处理](${silenceURL})
         `
     }
   }
