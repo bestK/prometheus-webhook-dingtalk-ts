@@ -34,8 +34,8 @@ app.post("/send", function (req, res) {
   let warnValue: string = notification.commonAnnotations.description
 
   if (notification.commonLabels.alertname === 'Slow SQl') {
-    warnValue = metrics.filter(e => e.value >= 10)
-      .map(e => (e.labels as ILable).sql_text)
+    warnValue = [...new Set(metrics.filter(e => e.value >= 10)
+      .map(e => (e.labels as ILable).sql_text))]
       .join(",")
   }
 
